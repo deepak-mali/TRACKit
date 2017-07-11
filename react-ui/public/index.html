@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css">
+    <script>
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+     <script> 
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '109913519652487',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v2.8'
+        });
+        
+        FB.Event.subscribe('auth.login', function(response){
+          console.log("login_event");
+          console.log(response.status);
+          console.log(response); 
+          if(response.status == "connected"){
+            sessionStorage.setItem("status", response.status);
+            sessionStorage.setItem("userId",response.authResponse.userID);
+            console.log("status ", sessionStorage.getItem("status"))
+            console.log("userId ", sessionStorage.getItem("userId"))
+            console.log("inside success");
+            window.location.href = 'https://fathomless-forest-12618.herokuapp.com/home';
+          } else{
+            window.location.href = 'https://fathomless-forest-12618.herokuapp.com';
+          }   
+        });
+      };
+   </script>
+    <title>Track You</title>
+  </head>
+  <body style="padding:1%; background-image: url(landing.jpg); background-repeat:no-repeat; background-attachment: fixed; background-position: center center; background-size: cover">        
+      <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true" style="float : right;"></div>
+
+      <div id="root"></div>
+  </body>
+</html>
